@@ -3,4 +3,4 @@
 /.vscode
 /data/*
 sha256:*
-/logs/*
+/logs/
