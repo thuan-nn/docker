@@ -166,3 +166,9 @@
 2023/06/05 09:17:00 [emerg] 17#17: io_setup() failed (38: Function not implemented)
 2023/06/05 09:17:00 [emerg] 19#19: io_setup() failed (38: Function not implemented)
 2023/06/05 09:17:00 [emerg] 20#20: io_setup() failed (38: Function not implemented)
+2023/10/04 08:39:52 [warn] 8#8: conflicting server name "comfee.test" on 0.0.0.0:80, ignored
+2023/10/04 08:39:52 [warn] 8#8: conflicting server name "comfee.test" on [::]:80, ignored
+2023/10/11 09:16:14 [warn] 9#9: conflicting server name "comfee.test" on 0.0.0.0:80, ignored
+2023/10/11 09:16:14 [warn] 9#9: conflicting server name "comfee.test" on [::]:80, ignored
+2023/10/20 04:19:02 [warn] 9#9: conflicting server name "comfee.test" on 0.0.0.0:80, ignored
+2023/10/20 04:19:02 [warn] 9#9: conflicting server name "comfee.test" on [::]:80, ignored
