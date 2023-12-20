@@ -4,6 +4,8 @@ networks:
     driver: ${NETWORKS_DRIVER}
   backend:
     driver: ${NETWORKS_DRIVER}
+  performance:
+    driver: ${NETWORKS_DRIVER}
 volumes:
   mysql:
     driver: ${VOLUMES_DRIVER}
@@ -223,26 +225,26 @@ services:
         soft: 65536
         hard: 65536
     ports:
-       - "${ELASTICSEARCH_HOST_HTTP_PORT}:9200"
-       - "${ELASTICSEARCH_HOST_TRANSPORT_PORT}:9300"
+      - "${ELASTICSEARCH_HOST_HTTP_PORT}:9200"
+      - "${ELASTICSEARCH_HOST_TRANSPORT_PORT}:9300"
     depends_on:
-       - php-fpm
+      - php-fpm
     networks:
-       - frontend
-       - backend
-### Kibana ##############################################
+      - frontend
+      - backend
+  ### Kibana ##############################################
   kibana:
     build:
       context: ./kibana
       args:
-       - ELK_VERSION=${ELK_VERSION}
+        - ELK_VERSION=${ELK_VERSION}
     ports:
-       - "${KIBANA_HTTP_PORT}:5601"
+      - "${KIBANA_HTTP_PORT}:5601"
     depends_on:
-       - elasticsearch
+      - elasticsearch
     networks:
-       - frontend
-       - backend
+      - frontend
+      - backend
   ### Portainer ################################################
   portainer:
     build:
@@ -256,6 +258,25 @@ services:
       - 9010:9000
     networks:
       - backend
+  ### Grafana ################################################
+  grafana:
+    build:
+      context: ./grafana
+    volumes:
+      - ${DATA_PATH_HOST}/grafana:/var/lib/grafana
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    networks:
+      - backend
+  ### Grafana k6################################################    
+  k6:
+    build:
+      context: ./k6
+    # image: grafana/k6
+    ports:
+      - "6565:6565"
+    networks:
+      - performance
   ### Docker-in-Docker ################################################
   docker-in-docker:
     image: docker:20.10-dind

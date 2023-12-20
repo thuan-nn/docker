@@ -26,9 +26,9 @@ RUN apk --update add wget \
 RUN pecl channel-update pecl.php.net; \
   docker-php-ext-install mysqli mbstring pdo pdo_mysql xml pcntl; \
   if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ] && [ $(php -r "echo PHP_MINOR_VERSION;") = "1" ]; then \
-    php -m | grep -q 'tokenizer'; \
+  php -m | grep -q 'tokenizer'; \
   else \
-    docker-php-ext-install tokenizer; \
+  docker-php-ext-install tokenizer; \
   fi
 
 # Add a non-root user:
@@ -56,15 +56,15 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ARG INSTALL_PHPREDIS=true
 
 RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
-    # Install Php Redis Extension
-    if [ $(php -r "echo PHP_MAJOR_VERSION;") = "5" ]; then \
-      pecl install -o -f redis-4.3.0; \
-    else \
-      pecl install -o -f redis; \
-    fi \
-    && rm -rf /tmp/pear \
-    && docker-php-ext-enable redis \
-;fi
+  # Install Php Redis Extension
+  if [ $(php -r "echo PHP_MAJOR_VERSION;") = "5" ]; then \
+  pecl install -o -f redis-4.3.0; \
+  else \
+  pecl install -o -f redis; \
+  fi \
+  && rm -rf /tmp/pear \
+  && docker-php-ext-enable redis \
+  ;fi
 
 ###########################################################################
 # PHP Memcached:
@@ -73,14 +73,14 @@ RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
 ARG INSTALL_MEMCACHED=false
 
 RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
-    # Install the php memcached extension
-    if [ $(php -r "echo PHP_MAJOR_VERSION;") = "5" ]; then \
-      echo '' | pecl -q install memcached-2.2.0; \
-    else \
-      echo '' | pecl -q install memcached; \
-    fi \
-    && docker-php-ext-enable memcached \
-;fi
+  # Install the php memcached extension
+  if [ $(php -r "echo PHP_MAJOR_VERSION;") = "5" ]; then \
+  echo '' | pecl -q install memcached-2.2.0; \
+  else \
+  echo '' | pecl -q install memcached; \
+  fi \
+  && docker-php-ext-enable memcached \
+  ;fi
 
 ###########################################################################
 # ImageMagick:
@@ -93,26 +93,26 @@ ARG IMAGEMAGICK_VERSION=latest
 ENV IMAGEMAGICK_VERSION ${IMAGEMAGICK_VERSION}
 
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
-    apt-get install -yqq libmagickwand-dev imagemagick && \
-    if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
-      cd /tmp && \
-      if [ ${IMAGEMAGICK_VERSION} = "latest" ]; then \
-        git clone https://github.com/Imagick/imagick; \
-      else \
-        git clone --branch ${IMAGEMAGICK_VERSION} https://github.com/Imagick/imagick; \
-      fi && \
-      cd imagick && \
-      phpize && \
-      ./configure && \
-      make && \
-      make install && \
-      rm -r /tmp/imagick; \
-    else \
-      pecl install imagick; \
-    fi && \
-    docker-php-ext-enable imagick; \
-    php -m | grep -q 'imagick' \
-;fi
+  apt-get install -yqq libmagickwand-dev imagemagick && \
+  if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
+  cd /tmp && \
+  if [ ${IMAGEMAGICK_VERSION} = "latest" ]; then \
+  git clone https://github.com/Imagick/imagick; \
+  else \
+  git clone --branch ${IMAGEMAGICK_VERSION} https://github.com/Imagick/imagick; \
+  fi && \
+  cd imagick && \
+  phpize && \
+  ./configure && \
+  make && \
+  make install && \
+  rm -r /tmp/imagick; \
+  else \
+  pecl install imagick; \
+  fi && \
+  docker-php-ext-enable imagick; \
+  php -m | grep -q 'imagick' \
+  ;fi
 
 ###########################################################################
 # FFMPEG:
@@ -123,8 +123,8 @@ USER root
 ARG INSTALL_FFMPEG=false
 
 RUN if [ ${INSTALL_FFMPEG} = true ]; then \
-    apt-get -y install ffmpeg \
-;fi
+  apk --update add ffmpeg \
+  ;fi
 
 #
 #--------------------------------------------------------------------------
