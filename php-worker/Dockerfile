@@ -153,7 +153,7 @@ ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
 # Check PHP version
 #--------------------------------------------------------------------------
 #
-
+  
 RUN php -v | head -n 1 | grep -q "PHP ${PHP_WORKER_VERSION}."
 
 #
